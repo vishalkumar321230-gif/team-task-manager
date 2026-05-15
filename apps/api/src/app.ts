@@ -13,10 +13,29 @@ import { userRoutes } from "./modules/users/user.routes.js";
 
 export const app = express();
 
+const allowedOrigins = [
+  env.CLIENT_URL,
+  ...(env.CLIENT_URLS?.split(",").map((origin) => origin.trim()).filter(Boolean) ?? [])
+];
+
 app.use(helmet());
 app.use(
   cors({
-    origin: env.CLIENT_URL,
+    origin(origin, callback) {
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      const isAllowed =
+        allowedOrigins.includes(origin) ||
+        (env.NODE_ENV === "production" && origin.endsWith(".up.railway.app"));
+
+      if (isAllowed) {
+        return callback(null, true);
+      }
+
+      return callback(new Error(`Origin ${origin} is not allowed by CORS`));
+    },
     credentials: true
   })
 );
