@@ -47,7 +47,7 @@ export function MemberPanel({ project, currentRole, onProjectChange }: Props) {
 
   async function removeMember(userId: string) {
     try {
-      await api.delete(`/projects/${project.id}/members/${userId}`);
+      await api.post(`/projects/${project.id}/members/${userId}/remove`);
       await refreshProject();
       toast({ title: "Member removed" });
     } catch (error) {

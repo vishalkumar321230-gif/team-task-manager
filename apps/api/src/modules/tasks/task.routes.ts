@@ -9,6 +9,7 @@ import {
   projectTasksParams,
   taskIdParams,
   taskQuerySchema,
+  updateTaskStatusSchema,
   updateTaskSchema
 } from "./task.schema.js";
 
@@ -36,8 +37,20 @@ taskRoutes.patch(
   controller.updateTask
 );
 
+taskRoutes.post(
+  "/tasks/:taskId/status",
+  validate({ params: taskIdParams, body: updateTaskStatusSchema }),
+  controller.updateTask
+);
+
 taskRoutes.delete(
   "/tasks/:taskId",
+  validate({ params: taskIdParams }),
+  controller.deleteTask
+);
+
+taskRoutes.post(
+  "/tasks/:taskId/delete",
   validate({ params: taskIdParams }),
   controller.deleteTask
 );

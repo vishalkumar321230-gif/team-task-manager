@@ -31,3 +31,7 @@ export const updateTaskSchema = z.object({
   status: z.nativeEnum(TaskStatus).optional(),
   assignedToId: z.string().min(1).optional().nullable()
 });
+
+export const updateTaskStatusSchema = z.object({
+  status: z.nativeEnum(TaskStatus)
+});

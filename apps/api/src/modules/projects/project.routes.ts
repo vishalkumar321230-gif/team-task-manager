@@ -35,3 +35,9 @@ projectRoutes.delete(
   requireProjectMember(ProjectRole.ADMIN),
   controller.removeMember
 );
+projectRoutes.post(
+  "/:projectId/members/:userId/remove",
+  validate({ params: memberParamsSchema }),
+  requireProjectMember(ProjectRole.ADMIN),
+  controller.removeMember
+);

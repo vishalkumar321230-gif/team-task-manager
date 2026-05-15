@@ -30,7 +30,7 @@ export function TaskBoard({ tasks, role, onChanged }: Props) {
 
   async function updateStatus(taskId: string, status: TaskStatus) {
     try {
-      await api.patch(`/tasks/${taskId}`, { status });
+      await api.post(`/tasks/${taskId}/status`, { status });
       onChanged();
       toast({ title: "Task updated" });
     } catch (error) {
@@ -44,7 +44,7 @@ export function TaskBoard({ tasks, role, onChanged }: Props) {
 
   async function deleteTask(taskId: string) {
     try {
-      await api.delete(`/tasks/${taskId}`);
+      await api.post(`/tasks/${taskId}/delete`);
       onChanged();
       toast({ title: "Task deleted" });
     } catch (error) {
